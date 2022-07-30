@@ -17,3 +17,37 @@ After extraction the repository contains the following files:
 * ndb.json : Code DB for the `lk` linked module
 * rdm.json : reverse dependency map, which maps all relevant files to the corresponding modules that used it
 * results : a directory with the generated 1000 off-target programs for `lk`
+
+## Off-target generation
+
+The Auto Off-Target project is able to generate off-target (OT) code for a given function automatically. More information can be found on the [AoT](https://github.com/Samsung/auto_off_target) project page. In order for the `AoT` project to work properly it needs Code Database (CodeDB) for a given project we're working on. Code Database can be generated using the Code Aware Services ([CAS](https://github.com/Samsung/CAS)) project. Please refer to the [README.md](https://github.com/Samsung/CAS/blob/master/README.md) file for more information how to setup and use the `CAS` project. Having the `CAS` setup properly the Code DB for the `lk` project can be created as follows.
+
+First clone and build the repository under `CAS` tracer:
+```bash
+git clone https://github.com/littlekernel/lk.git && cd lk
+git checkout 77fa084cd05459a1f360a2b825e14ea6e60518e5
+etrace scripts/make-parallel qemu-virt-arm32-test
+````
+
+Next create the Build Database:
+```bash
+export CAS_DIR=<path_to_CAS_repository>
+${CAS_DIR}/etrace_parser .nfsdb
+python3 ${CAS_DIR}/bas/postprocess.py .nfsdb.json
+${CAS_DIR}/bas/postprocess.py --create-nfsdb-cache .nfsdb.json
+```
+
+In the next step we have to prepare some files needed for the Code Database creation:
+```bash
+export PYTHONPATH=${CAS_DIR}
+git clone https://github.com/bzator/ASE2022_AOT_artifacts.git
+ASE2022_AOT_artifacts/extract-lk-info-for-ftdb .nfsdb.json.img
+```
+
+Now create the Code Database:
+```bash
+export CLANG_PROC=${CAS_DIR}/clang-proc/clang-proc
+${CAS_DIR}/clang-proc/create_json_db -P ${CLANG_PROC} -p fops -o fops.json
+${CAS_DIR}/clang-proc/create_json_db -p db -o db.json -P $CLANG_PROC -F fops.json -m lk -V "77fa084cd05459a1f360a2b825e14ea6e60518e5" -A -cdm cdm.json -j4
+${CAS_DIR}/tests/ftdb_cache_test --only-ftdb-create db.json
+```
