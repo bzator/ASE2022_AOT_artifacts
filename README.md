@@ -21,6 +21,7 @@ After extraction the repository contains the following files:
 The `results` directory contains all the Off-target code generated for all functions evaluated for the `lk` target system which is the primary artifact to be verified as the main theme of the paper is extraction and generation of a correct C code from a larger S/W system. Additionally there are also results from the testing campaigns (fuzzer logs and artifacts) executed to properly evaluate the `AoT` usefullness (collected data from all test sessions are also available in the form of `.csv` files). All the Off-targets code was generated using two tools recently released to open source, i.e.:
 * [Auto Off-Target](https://github.com/Samsung/auto_off_target)
 * [CAS](https://github.com/Samsung/CAS)
+
 These are the core engines that were release to open source. The test management scripts are not present and it was not included in the open sourced packages.
 
 
