@@ -1,6 +1,6 @@
 ## Introduction
 
-This repository contains information regarding artifacts generated for the purpose of the  "Auto Off-Target: Enabling Thorough and Scalable Testing for Complex Software Systems" paper written by Tomasz Kuchta and Bartosz Zator. This paper describes experiments with off-target (OT) generation for four target systems: Android Linux kernel running on Pixel 6 device, the Little Kernel Embedded Operating System (`lk`), Das U-Boot (`uboot`) - a bootloader bootloader for embedded devices and the IUH module of the Osmocom project implementing he IUH interface for femtocell communication from a 3GPP standard. Although originally artifacts were generated for all target systems this repository contains information only about artifacts for the `lk` project. This is due to the enormous size of the artifact directories. The directory for the `lk` project itself (which is the smallest of the four) contains 12GB of data in its original form (unpacked). The principles of how the artifacts are used or what they represent don't change across the projects therefore it is assumed that the artifacts from the `lk` project can serve as a representative to the paper understanding and verification.
+This repository contains information regarding artifacts generated for the purpose of the "Auto Off-Target: Enabling Thorough and Scalable Testing for Complex Software Systems" paper written by Tomasz Kuchta and Bartosz Zator. This paper describes experiments with off-target (OT) generation for four target systems: Android Linux kernel running on Pixel 6 device, the Little Kernel Embedded Operating System (`lk`), Das U-Boot (`uboot`) - a bootloader bootloader for embedded devices and the IUH module of the Osmocom project implementing the IUH interface for femtocell communication from a 3GPP standard. Although originally artifacts were generated for all target systems this repository contains information only about artifacts for the `lk` project. This is due to the enormous size of the artifact directories. The directory for the `lk` project itself (which is the smallest of the four) contains 12GB of data in its original form (unpacked). The principles of how the artifacts are used or what they represent don't change across the projects therefore it is assumed that the artifacts from the `lk` project can serve as a representative example to the paper understanding and verification.
 
 ## Artifact repository
 
@@ -15,14 +15,14 @@ After extraction the repository contains the following files:
 * cdm.json : compilation dependency map, which is a list of compiled files for all relevant modules (single linked lk binary in this case)
 * compile_commands.json : a list of commands used to compile each source file
 * ndb.json : Code DB for the `lk` linked module
-* rdm.json : reverse dependency map, which maps all relevant files to the corresponding modules that used it
+* rdm.json : reverse dependency map, which maps all relevant files to the corresponding modules that used them
 * results : a directory with the generated 1000 off-target programs for `lk`
 
-The `results` directory contains all the Off-target code generated for all functions evaluated for the `lk` target system which is the primary artifact to be verified as the main theme of the paper is extraction and generation of a correct C code from a larger S/W system. Additionally there are also results from the testing campaigns (fuzzer logs and artifacts) executed to properly evaluate the `AoT` usefullness (summary of the collected data from all test sessions are also available in the form of `.csv` files). All the Off-targets code was generated using two tools recently released to open source, i.e.:
+The `results` directory contains all the Off-target code generated for all functions evaluated for the `lk` target system which is the primary artifact to be verified as the main theme of the paper is extraction and generation of a correct C code from a larger S/W system. Additionally there are also results from the testing campaigns (fuzzer logs and artifacts) executed to properly evaluate the `AoT` usefulness (summary of the collected data from all test sessions are also available in the form of `.csv` files). All the Off-targets code was generated using two tools recently released to open source, i.e.:
 * [Auto Off-Target](https://github.com/Samsung/auto_off_target)
 * [CAS](https://github.com/Samsung/CAS)
 
-These are the core engines that were release to open source. The test management scripts are not present as it was not included in the open sourced packages.
+These are the core engines that were release to open source and are also artifacts for the paper. The test management scripts are not present as it was not included in the open sourced packages.
 
 
 ## Off-target generation
@@ -87,12 +87,12 @@ In order to test the generated off-target the first thing to do is to compile th
 (cd out_minip_parse_ipaddr && make)
 ```
 
-This will produce the `native` binary with the compiled (and linked) off-target code. Adding `AFL` instrumentation requires different target to build:
+This will produce the `native` binary with the compiled (and linked) off-target code. Adding `AFL` instrumentation requires a different target to build:
 ```bash
 (cd out_minip_parse_ipaddr && make afl)
 ```
 
-There are other targets like `asan`, `msan`, `ubasn`, `dfsan`, `klee` etc. Please consult the generated `Makefile` for details (building some of the targets might require latest clang version 15 installed). After the build of `afl` target completes the OT is ready to be fuzzed.
+There are other targets like `asan`, `msan`, `ubasn`, `dfsan`, `klee` etc. Please consult the generated `Makefile` for details (building some of the targets might require latest clang version 15 installed). After the build of the `afl` target completes the OT is ready to be fuzzed.
 
 ```bash
 cd out_minip_parse_ipaddr
@@ -100,4 +100,4 @@ mkdir -p testcase && dd if=/dev/zero of=testcase/zero bs=4 count=1
 afl-fuzz -m none -i testcase -o findings -- ./afl @@
 ```
 
-Other testing techniques (like symbolic execution using the `KLEE`) can be used on other targets as appropriate.
+Other testing techniques (like symbolic execution by using the `KLEE`) can be used on other targets as appropriate.
