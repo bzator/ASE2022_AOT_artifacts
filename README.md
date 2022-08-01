@@ -22,7 +22,7 @@ The `results` directory contains all the Off-target code generated for all funct
 * [Auto Off-Target](https://github.com/Samsung/auto_off_target)
 * [CAS](https://github.com/Samsung/CAS)
 
-These are the core engines that were release to open source. The test management scripts are not present and it was not included in the open sourced packages.
+These are the core engines that were release to open source. The test management scripts are not present as it was not included in the open sourced packages.
 
 
 ## Off-target generation
