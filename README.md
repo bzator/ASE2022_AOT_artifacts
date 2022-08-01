@@ -18,7 +18,7 @@ After extraction the repository contains the following files:
 * rdm.json : reverse dependency map, which maps all relevant files to the corresponding modules that used it
 * results : a directory with the generated 1000 off-target programs for `lk`
 
-The `results` directory contains all the Off-target code generated for all functions evaluated for the `lk` target system which is the primary artifact to be verified as the main theme of the paper is extraction and generation of a correct C code from a larger S/W system. Additionally there are also results from the testing campaigns (fuzzer logs and artifacts) executed to properly evaluate the `AoT` usefullness (collected data from all test sessions are also available in the form of `.csv` files). All the Off-targets code was generated using two tools recently released to open source, i.e.:
+The `results` directory contains all the Off-target code generated for all functions evaluated for the `lk` target system which is the primary artifact to be verified as the main theme of the paper is extraction and generation of a correct C code from a larger S/W system. Additionally there are also results from the testing campaigns (fuzzer logs and artifacts) executed to properly evaluate the `AoT` usefullness (summary of the collected data from all test sessions are also available in the form of `.csv` files). All the Off-targets code was generated using two tools recently released to open source, i.e.:
 * [Auto Off-Target](https://github.com/Samsung/auto_off_target)
 * [CAS](https://github.com/Samsung/CAS)
 
