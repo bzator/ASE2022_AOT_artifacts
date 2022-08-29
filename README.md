@@ -24,6 +24,7 @@ The `results` directory contains all the Off-target code generated for all funct
 
 These are the core engines that were release to open source and are also artifacts for the paper. The test management scripts are not present as it was not included in the open sourced packages.
 
+The below description provides a guide to generate off-target (OT) for selected functions. The expected result of the OT generation is the directory with created source code that is ready to be built. The build process creates OT executables with various code instrumentations embedded which can be used for different purposes (i.e. fuzzing, coverage tracking, debugging etc.).
 
 ## Off-target generation
 
